@@ -29,6 +29,7 @@
 #include "console_io.h"
 #include "sensor_chart.h"
 #include "serial_hw.h"
+#include "idle_thread.h"
 
 #if EFI_PROD_CODE
 #include "mpu_util.h"
@@ -311,25 +312,7 @@ void applyNewHardwareSettings(DECLARE_ENGINE_PARAMETER_SIGNATURE) {
 	stopHip9001_pins();
 #endif /* EFI_HIP_9011 */
 
-#if EFI_PROD_CODE && (BOARD_EXT_GPIOCHIPS > 0)
-	stopSmartCsPins();
-#endif /* (BOARD_EXT_GPIOCHIPS > 0) */
-
-#if EFI_VEHICLE_SPEED
-	stopVSSPins();
-#endif /* EFI_VEHICLE_SPEED */
-
-#if EFI_LOGIC_ANALYZER
-	stopLogicAnalyzerPins();
-#endif /* EFI_LOGIC_ANALYZER */
-
-#if EFI_EMULATE_POSITION_SENSORS
-	stopTriggerEmulatorPins();
-#endif /* EFI_EMULATE_POSITION_SENSORS */
-
-#if EFI_AUX_PID
-	stopVvtControlPins();
-#endif /* EFI_AUX_PID */
+	stopHardware(PASS_ENGINE_PARAMETER_SIGNATURE);
 
 	if (isConfigurationChanged(is_enabled_spi_1)) {
 		stopSpi(SPI_DEVICE_1);
@@ -352,6 +335,7 @@ void applyNewHardwareSettings(DECLARE_ENGINE_PARAMETER_SIGNATURE) {
 #endif /* #if EFI_HD44780_LCD */
 
 	if (isPinOrModeChanged(clutchUpPin, clutchUpPinMode)) {
+		// bug? duplication with stopPedalPins?
 		efiSetPadUnused(activeConfiguration.clutchUpPin PASS_ENGINE_PARAMETER_SUFFIX);
 	}
 
@@ -488,6 +472,30 @@ void initHardwareNoConfig(DECLARE_ENGINE_PARAMETER_SIGNATURE) {
 #endif // EFI_FILE_LOGGING
 }
 
+void stopHardware(DECLARE_ENGINE_PARAMETER_SIGNATURE) {
+	stopPedalPins(PASS_ENGINE_PARAMETER_SIGNATURE);
+
+#if EFI_PROD_CODE && (BOARD_EXT_GPIOCHIPS > 0)
+	stopSmartCsPins();
+#endif /* (BOARD_EXT_GPIOCHIPS > 0) */
+
+#if EFI_VEHICLE_SPEED
+	stopVSSPins();
+#endif /* EFI_VEHICLE_SPEED */
+
+#if EFI_LOGIC_ANALYZER
+	stopLogicAnalyzerPins();
+#endif /* EFI_LOGIC_ANALYZER */
+
+#if EFI_EMULATE_POSITION_SENSORS
+	stopTriggerEmulatorPins();
+#endif /* EFI_EMULATE_POSITION_SENSORS */
+
+#if EFI_AUX_PID
+	stopVvtControlPins();
+#endif /* EFI_AUX_PID */
+}
+
 /**
  * This method is invoked both on ECU start and configuration change
  */
@@ -497,6 +505,8 @@ void startHardware(DECLARE_ENGINE_PARAMETER_SIGNATURE) {
 #endif /* HAL_USE_PAL && EFI_JOYSTICK */
 
 	startTriggerDebugPins(PASS_ENGINE_PARAMETER_SIGNATURE);
+
+	startPedalPins(PASS_ENGINE_PARAMETER_SIGNATURE);
 }
 
 void initHardware(DECLARE_ENGINE_PARAMETER_SIGNATURE) {

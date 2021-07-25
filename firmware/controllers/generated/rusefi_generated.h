@@ -228,8 +228,10 @@
 #define cltTimingBins_offset 2352
 #define cltTimingExtra_offset 2384
 #define clutchDownPin_offset 664
+#define clutchDownPinInverted_offset 976
 #define clutchDownPinMode_offset 667
 #define clutchUpPin_offset 969
+#define clutchUpPinInverted_offset 976
 #define clutchUpPinMode_offset 971
 #define CMD_AC_RELAY_BENCH "acrelaybench"
 #define CMD_ALTERNATOR_PIN "set_alternator_pin"
@@ -955,7 +957,9 @@
 #define ignitionRpmBins_offset 17376
 #define ignitionTable_offset 16288
 #define ignOverrideMode_offset 2128
+#define IM_IM_BATCH 2
 #define IM_IM_SINGLE_POINT 3
+#define IM_IM_WASTED_SPARK 2
 #define INDICATOR_NAME_AC_SWITCH "AC switch"
 #define INDICATOR_NAME_BRAKE_DOWN "brake: down"
 #define INDICATOR_NAME_CLUTCH_DOWN "clutch: down"
@@ -1312,8 +1316,8 @@
 #define showHumanReadableWarning_offset 976
 #define showSdCardWarning_offset 76
 #define SIGNATURE_BOARD all
-#define SIGNATURE_DATE 2021.07.23
-#define SIGNATURE_HASH 3645751849
+#define SIGNATURE_DATE 2021.07.25
+#define SIGNATURE_HASH 3751165502
 #define silentTriggerError_offset 1464
 #define slowAdcAlpha_offset 2088
 #define sparkDwellRpmBins_offset 332
@@ -1472,8 +1476,6 @@
 #define tle8888_mode_e_auto_enum "TL_AUTO", "TL_SEMI_AUTO", "TL_MANUAL", "TL_HALL"
 #define tle8888mode_offset 2416
 #define tle8888spiDevice_offset 4000
-#define todoClutchDownPinInverted_offset 976
-#define todoClutchUpPinInverted_offset 976
 #define TOOTH_DATA_LENGTH 2000
 #define TOOTH_PACKET_COUNT 1000
 #define TOOTH_PACKET_SIZE 2
@@ -1671,7 +1673,7 @@
 #define ts_show_spi true
 #define ts_show_trigger_comparator false
 #define ts_show_tunerstudio_port true
-#define TS_SIGNATURE "rusEFI 2021.07.23.all.3645751849"
+#define TS_SIGNATURE "rusEFI 2021.07.25.all.3751165502"
 #define TS_SINGLE_WRITE_COMMAND 'W'
 #define TS_SINGLE_WRITE_COMMAND_char W
 #define TS_TEST_COMMAND 't'
